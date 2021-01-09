@@ -1,7 +1,7 @@
 const tf = require('@tensorflow/tfjs-node');
 const universalSentenceEncoder = require('@tensorflow-models/universal-sentence-encoder');
 
-const MODEL_URL = process.env.MODEL_URL || 'https://recipesage-ml.s3-us-west-2.amazonaws.com/models/ingredient-instruction-text-classifier/prod/model.json';
+const { MODEL_URL } = process.env;
 
 const usePromise = universalSentenceEncoder.load();
 const classifierModelPromise = tf.loadLayersModel(MODEL_URL);

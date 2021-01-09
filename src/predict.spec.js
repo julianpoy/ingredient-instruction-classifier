@@ -22,7 +22,7 @@ const instructions = [
 
 const nonRecipeText = [
   'We’ve done the creamy red pepper sauce thing before, a few times – like here, with cashews and roasted cauliflower, and here, with almond milk and zucchini noodles, and here, with the butter and fettuccine and shrimp. But this version is special because it sees us just as we are in this moment:',
-  'GOOD olive oil, QUALITY pasta, ACTUALLY DELICIOUS jarred roasted red peppers are the best ingredients to add.',
+  'I like GOOD olive oil, QUALITY pasta, ACTUALLY DELICIOUS jarred roasted red peppers are the best ingredients to add.',
   'Brand allegiance aside, I can’t say enough good things about this creamy red pepper pasta situation.',
 ];
 
