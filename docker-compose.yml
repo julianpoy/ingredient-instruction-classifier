@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - MODEL_URL=file:///app/model/model.json
     command: node ./src/server.js
     volumes:
       - ./src:/app/src

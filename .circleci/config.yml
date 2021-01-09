@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: 'circleci/node:latest'
+        environment:
+          MODEL_URL: file://~/project/model/model.json
     steps:
       - setup_remote_docker
       - run:
