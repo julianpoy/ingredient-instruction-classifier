@@ -1,6 +1,6 @@
 {
   "name": "ingredient-instruction-classifier",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "",
   "main": "src/predict.js",
   "scripts": {
@@ -9,11 +9,11 @@
     "lint:fix": "npm run lint -- --fix",
     "test": "jest ./src --watch --coverage",
     "test:ci": "jest ./src --coverage",
-    "integration": "./integration-tests/run.sh"
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/julianpoy/ingredient-instruction-classifier.git"
+    "url": "https://github.com/julianpoy/ingredient-instruction-classifier.git"
   },
   "author": "Julian Poyourow",
   "license": "AGPL-3.0-only",
@@ -28,9 +28,11 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "@semantic-release/exec": "^5.0.0",
     "eslint": "^7.17.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "semantic-release": "^17.3.1"
   }
 }
