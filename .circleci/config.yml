@@ -10,14 +10,14 @@ jobs:
           command: echo "$DOCKER_PAT" | docker login --username $DOCKER_USER --password-stdin
       - checkout
       - run:
-        name: install
-        command: npm install
+          name: install
+          command: npm install
       - run:
-        name: lint
-        command: npm run lint
+          name: lint
+          command: npm run lint
       - run:
-        name: test
-        command: npm run test
+          name: test
+          command: npm run test
       - run:
-        name: release
-        command: npx semantic-release || true
+          name: release
+          command: npx semantic-release || true
