@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: 'circleci/node:latest'
+    steps:
+      - setup_remote_docker
+      - run:
+          name: docker-login
+          command: echo "$DOCKER_PAT" | docker login --username $DOCKER_USER --password-stdin
+      - checkout
+      - run:
+        name: install
+        command: npm install
+      - run:
+        name: lint
+        command: npm run lint
+      - run:
+        name: test
+        command: npm run test
+      - run:
+        name: release
+        command: npx semantic-release || true
