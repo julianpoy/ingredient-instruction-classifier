@@ -1,0 +1,36 @@
+{
+  "name": "ingredient-instruction-classifier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/predict.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "lint": "eslint ./src/*.js ./src/**/*.js",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest ./src --watch --coverage",
+    "test:ci": "jest ./src --coverage",
+    "integration": "./integration-tests/run.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julianpoy/ingredient-instruction-classifier.git"
+  },
+  "author": "Julian Poyourow",
+  "license": "AGPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/julianpoy/ingredient-instruction-classifier/issues"
+  },
+  "homepage": "https://github.com/julianpoy/ingredient-instruction-classifier#readme",
+  "dependencies": {
+    "@tensorflow-models/universal-sentence-encoder": "^1.3.2",
+    "@tensorflow/tfjs-node": "^2.8.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "jest": "^26.6.3"
+  }
+}
