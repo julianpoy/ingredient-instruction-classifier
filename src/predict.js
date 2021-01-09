@@ -15,9 +15,10 @@ const predict = async (sentences) => {
   const classifierModel = await classifierModelPromise;
 
   const tensors = [];
-  for (var i = 0; i < sentences.length; i += SENTENCE_EMBEDDING_BATCH_SIZE) {
+  for (let i = 0; i < sentences.length; i += SENTENCE_EMBEDDING_BATCH_SIZE) {
     const batch = sentences.slice(i, i + SENTENCE_EMBEDDING_BATCH_SIZE);
 
+    // eslint-disable-next-line no-await-in-loop
     const tensor = await useModel.embed(batch);
     tensors.push(tensor);
   }

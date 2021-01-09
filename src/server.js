@@ -14,4 +14,4 @@ app.post('/', async (req, res) => {
   res.status(200).json(results);
 });
 
-app.listen(parseInt(process.env.PORT || 3000));
+app.listen(parseInt(process.env.PORT || 3000, 10));

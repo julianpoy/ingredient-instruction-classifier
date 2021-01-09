@@ -3,14 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const universalSentenceEncoder = require('@tensorflow-models/universal-sentence-encoder');
 
-const buildEncodedSentences = async sentences => {
+const buildEncodedSentences = async (sentences) => {
   const model = await universalSentenceEncoder.load();
   const batchSize = 2000;
 
   const tensors = [];
-  const sentenceIdx = 0;
-  for(let sentenceIdx = 0; sentenceIdx < sentences.length; sentenceIdx += batchSize) {
+  for (let sentenceIdx = 0; sentenceIdx < sentences.length; sentenceIdx += batchSize) {
     const sentenceBatch = sentences.slice(sentenceIdx, sentenceIdx + batchSize);
+    // eslint-disable-next-line no-await-in-loop
     const tensor = await model.embed(sentenceBatch);
     tensors.push(tensor);
   }
@@ -19,9 +19,9 @@ const buildEncodedSentences = async sentences => {
 };
 
 // Use for deduping within same type
-const dedupeCategoryData = entries => {
+const dedupeCategoryData = (entries) => {
   const seen = new Set();
-  return entries.filter(entry => {
+  return entries.filter((entry) => {
     const isSeen = seen.has(entry.text);
     seen.add(entry.text);
     return !isSeen;
@@ -29,7 +29,7 @@ const dedupeCategoryData = entries => {
 };
 
 // Use for deduping entire dataset - will ensure that an entry does not exist across multiple types
-const dedupeTrainingData = entries => {
+const dedupeTrainingData = (entries) => {
   const duplicates = [];
 
   entries.forEach((entry1, idx1) => {
@@ -41,12 +41,12 @@ const dedupeTrainingData = entries => {
   });
 
   const dedupedEntries = [...entries];
-  duplicates.forEach(duplicate => {
+  duplicates.forEach((duplicate) => {
     dedupedEntries.splice(dedupedEntries.indexOf(duplicate), 1);
   });
 
   return dedupedEntries;
-}
+};
 
 // Types:
 // 1: Ingredient
@@ -62,61 +62,69 @@ const MODEL_OUTPUT_PATH = path.resolve(__dirname, '../model');
 const run = async () => {
   const startTime = Date.now();
 
-  const ingredients = dedupeCategoryData(JSON.parse(fs.readFileSync(INGREDIENTS_DATA_PATH)).map(element => ({
-    text: element.trim(),
-    type: 1,
-  })));
+  const ingredients = dedupeCategoryData(
+    JSON.parse(fs.readFileSync(INGREDIENTS_DATA_PATH)).map((element) => ({
+      text: element.trim(),
+      type: 1,
+    })),
+  );
 
-  const instructions = dedupeCategoryData(JSON.parse(fs.readFileSync(INSTRUCTIONS_DATA_PATH)).map(element => ({
-    text: element.trim(),
-    type: 2,
-  })));
+  const instructions = dedupeCategoryData(
+    JSON.parse(fs.readFileSync(INSTRUCTIONS_DATA_PATH)).map((element) => ({
+      text: element.trim(),
+      type: 2,
+    })),
+  );
 
   const nonRecipeText = dedupeCategoryData(
     fs.readFileSync(NON_RECIPE_DATA_PATH)
       .toString()
       .toLowerCase()
       .split('\n')
-      .filter(line => line.trim().length > 0)
-      .map(line => ({
+      .filter((line) => line.trim().length > 0)
+      .map((line) => ({
         text: line.trim(),
-        type: 3
-      }))
+        type: 3,
+      })),
   );
 
   console.log(`${ingredients.length} ingredients loaded`);
   console.log(`${instructions.length} instructions loaded`);
   console.log(`${nonRecipeText.length} non-recipe texts loaded`);
 
-  const smallestDatasetLength = Math.min(instructions.length, ingredients.length, nonRecipeText.length);
+  const smallestDatasetLength = Math.min(
+    instructions.length,
+    ingredients.length,
+    nonRecipeText.length,
+  );
 
   const trainingSamples = dedupeTrainingData([
     ...instructions.slice(0, smallestDatasetLength - 1),
     ...ingredients.slice(0, smallestDatasetLength - 1),
-    ...nonRecipeText.slice(0, smallestDatasetLength - 1)
+    ...nonRecipeText.slice(0, smallestDatasetLength - 1),
   ]).sort(() => Math.floor((Math.random() * 3) - 1));
 
-  console.log("Total number of training samples (restricted by smallest dataset):", trainingSamples.length);
+  console.log('Total number of training samples (restricted by smallest dataset):', trainingSamples.length);
 
   const testingSamples = JSON.parse(fs.readFileSync(TESTING_SAMPLES_DATA_PATH));
 
-  console.log("Building word vectors...");
-  const trainingData = await buildEncodedSentences(trainingSamples.map(item => item.text));
-  const testingData = await buildEncodedSentences(testingSamples.map(item => item.text));
+  console.log('Building word vectors...');
+  const trainingData = await buildEncodedSentences(trainingSamples.map((item) => item.text));
+  const testingData = await buildEncodedSentences(testingSamples.map((item) => item.text));
 
-  console.log("Building ouput data tensor...");
-  const trainingDataOutput = tf.tensor2d(trainingSamples.map(item => [
-    item.type == 1 ? 1 : 0,
-    item.type == 2 ? 1 : 0,
-    item.type == 3 ? 1 : 0
+  console.log('Building ouput data tensor...');
+  const trainingDataOutput = tf.tensor2d(trainingSamples.map((item) => [
+    item.type === 1 ? 1 : 0,
+    item.type === 2 ? 1 : 0,
+    item.type === 3 ? 1 : 0,
   ]));
-  const testingDataOutput = tf.tensor2d(testingSamples.map(item => [
-    item.type == 1 ? 1 : 0,
-    item.type == 2 ? 1 : 0,
-    item.type == 3 ? 1 : 0
+  const testingDataOutput = tf.tensor2d(testingSamples.map((item) => [
+    item.type === 1 ? 1 : 0,
+    item.type === 2 ? 1 : 0,
+    item.type === 3 ? 1 : 0,
   ]));
 
-  console.log("Building model");
+  console.log('Building model');
 
   const model = tf.sequential();
 
@@ -133,7 +141,7 @@ const run = async () => {
     units: 3,
   }));
 
-  model.add(tf.layers.dense({ 
+  model.add(tf.layers.dense({
     inputShape: [3],
     activation: 'sigmoid',
     units: 3,
@@ -143,9 +151,9 @@ const run = async () => {
   model.compile({
     loss: 'meanSquaredError',
     optimizer: tf.train.adam(0.06),
-    metrics: ['accuracy']
+    metrics: ['accuracy'],
   });
-  
+
   await model.fit(
     trainingData,
     trainingDataOutput,
@@ -155,8 +163,8 @@ const run = async () => {
       validationSplit: 0.20,
       callbacks: [
         tf.callbacks.earlyStopping(),
-      ]
-    }
+      ],
+    },
   );
 
   const [testLoss, testAcc] = model.evaluate(testingData, testingDataOutput, { batchSize: 128 });
@@ -165,13 +173,10 @@ const run = async () => {
 
   console.log('Saving model...');
 
-  await model.save('file://' + MODEL_OUTPUT_PATH);
+  await model.save(`file://${MODEL_OUTPUT_PATH}`);
 
   const secondsElapsed = (Date.now() - startTime) / 1000;
   console.log(`Done building model in ${secondsElapsed} seconds.`);
-}
+};
 
 run();
-
-
-
