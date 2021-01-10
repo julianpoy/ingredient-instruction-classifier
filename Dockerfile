@@ -11,3 +11,5 @@ RUN npm install
 
 COPY ./src /app/src
 COPY ./model /app/model
+
+CMD node ./src/server.js
