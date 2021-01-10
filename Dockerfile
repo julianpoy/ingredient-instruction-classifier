@@ -12,4 +12,4 @@ RUN npm install
 COPY ./src /app/src
 COPY ./model /app/model
 
-RUN node ./src/server.js
+CMD node ./src/server.js
