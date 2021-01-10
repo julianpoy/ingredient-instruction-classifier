@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
 const predict = require('./predict.js');
 
 const app = express();
+app.use(morgan(':method :url :status :response-time ms'));
 app.use(cors());
 app.use(express.json());
 
