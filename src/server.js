@@ -10,6 +10,10 @@ app.use(express.json());
 
 app.post('/', async (req, res) => {
   const { sentences } = req.body;
+  if (!sentences) {
+    res.status(400).send('Must provide sentences');
+    return;
+  }
 
   const results = await predict(sentences);
 
