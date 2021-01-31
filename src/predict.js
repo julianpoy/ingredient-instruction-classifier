@@ -8,7 +8,10 @@ const classifierModelPromise = tf.loadLayersModel(MODEL_URL);
 
 // This value greatly affects RAM usage due to USE
 // Higher values will tend to yield better performance, but higher RAM usage
-const SENTENCE_EMBEDDING_BATCH_SIZE = parseInt(process.env.SENTENCE_EMBEDDING_BATCH_SIZE || 200, 10);
+const SENTENCE_EMBEDDING_BATCH_SIZE = parseInt(
+  process.env.SENTENCE_EMBEDDING_BATCH_SIZE || 200,
+  10,
+);
 
 const predict = async (sentences) => {
   const useModel = await usePromise;

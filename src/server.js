@@ -15,7 +15,7 @@ app.use(express.json());
 const PREDICTION_CONCURRENCY = parseInt(process.env.PREDICTION_CONCURRENCY || os.cpus().length, 10);
 
 const queue = new PQueue({
-  concurrency: PREDICTION_CONCURRENCY
+  concurrency: PREDICTION_CONCURRENCY,
 });
 
 app.post('/', async (req, res) => {
