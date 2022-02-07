@@ -4,7 +4,7 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     ["@semantic-release/exec", {
-      "publishCmd": "./scripts/build_push_docker.sh ${nextRelease.version}"
+      "publishCmd": "./scripts/circleci_buildx.sh ${nextRelease.version}"
     }],
     "@semantic-release/npm",
     "@semantic-release/github"
