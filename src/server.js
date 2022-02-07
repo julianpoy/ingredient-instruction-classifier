@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const os = require('os');
 const { default: PQueue } = require('p-queue');
 
-const predict = require('./predict.js');
+const predict = require('./predict');
 
 const app = express();
 app.use(morgan(':method :url :status :response-time ms'));
