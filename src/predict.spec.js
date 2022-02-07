@@ -1,7 +1,7 @@
 // This file is mostly intended to test the model itself, rather than predict.js
 
-const predict = require('./predict.js');
-const { getPredictionType } = require('./util.js');
+const predict = require('./predict');
+const { getPredictionType } = require('./util');
 
 const ingredients = [
   '1 cup granulated sugar',

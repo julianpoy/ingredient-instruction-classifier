@@ -28,7 +28,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "morgan": "^1.10.0",
-    "p-queue": "^7.2.0"
+    "p-queue": "^6.6.2"
   },
   "devDependencies": {
     "@semantic-release/exec": "^6.0.3",
