@@ -1,5 +1,6 @@
 #!/bin/sh
 
+export DOCKER_BUILD_KIT=1
 export DOCKER_CLI_EXPERIMENTAL=enabled
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 docker context create multi-arch-build
