@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 export DOCKER_BUILD_KIT=1
 export DOCKER_CLI_EXPERIMENTAL=enabled
 
