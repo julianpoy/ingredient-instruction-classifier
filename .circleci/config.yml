@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: 'circleci/node:latest'
+      - image: 'cimg/node:18.15'
         environment:
           MODEL_URL: file://model/model.json
           DOCKER_CLI_EXPERIMENTAL: enabled
