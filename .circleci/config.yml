@@ -11,7 +11,8 @@ jobs:
           version: 20.10.11
       - run:
           name: docker-login
-          command: echo "$DOCKER_PAT" | docker login --username $DOCKER_USER --password-stdin
+          command: echo "$DOCKER_PAT" | docker login --username $DOCKER_USER
+            --password-stdin
       - checkout
       - run:
           name: install
@@ -25,3 +26,5 @@ jobs:
       - run:
           name: release
           command: npx semantic-release || true
+    # The resource_class feature allows configuring CPU and RAM resources for each job. Different resource classes are available for different executors. https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
