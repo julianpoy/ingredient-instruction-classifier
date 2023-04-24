@@ -7,7 +7,7 @@ docker buildx build . \
   -t julianpoy/ingredient-instruction-classifier:latest \
   -t julianpoy/ingredient-instruction-classifier:$1
 
-docker images
+docker images --all
 
 #docker push julianpoy/ingredient-instruction-classifier:$1
 #docker push julianpoy/ingredient-instruction-classifier:latest
