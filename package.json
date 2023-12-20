@@ -23,8 +23,8 @@
   "homepage": "https://github.com/julianpoy/ingredient-instruction-classifier#readme",
   "dependencies": {
     "@tensorflow-models/universal-sentence-encoder": "^1.3.3",
-    "@tensorflow/tfjs-node": "^4.4.0",
-    "@tensorflow/tfjs-node-gpu": "^4.4.0",
+    "@tensorflow/tfjs-node": "^4.15.0",
+    "@tensorflow/tfjs-node-gpu": "^4.15.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "morgan": "^1.10.0",
