@@ -28,7 +28,16 @@ const predict = async (sentences) => {
 
   const tensor = tf.concat(tensors);
 
-  const results = await classifierModel.predict(tensor).arraySync();
+  const resultTensors = classifierModel.predict(tensor);
+
+  const results = await resultTensors.arraySync();
+
+  // Must clean up after tensorflow, since it'll leak memory otherwise
+  tensors.forEach((tensor) => tf.dispose(tensor));
+  tf.dispose(resultTensors);
+  tf.dispose(tensor);
+
+  console.log("Current tensors in memory:", tf.memory().numTensors, "Current TF mem bytes:", tf.memory().numBytes);
 
   return results;
 };
