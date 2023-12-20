@@ -33,11 +33,11 @@ const predict = async (sentences) => {
   const results = await resultTensors.arraySync();
 
   // Must clean up after tensorflow, since it'll leak memory otherwise
-  tensors.forEach((tensor) => tf.dispose(tensor));
+  tensors.forEach((_tensor) => tf.dispose(_tensor));
   tf.dispose(resultTensors);
   tf.dispose(tensor);
 
-  console.log("Current tensors in memory:", tf.memory().numTensors, "Current TF mem bytes:", tf.memory().numBytes);
+  console.log('Current tensors in memory:', tf.memory().numTensors, 'Current TF mem bytes:', tf.memory().numBytes);
 
   return results;
 };
