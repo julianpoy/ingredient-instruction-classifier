@@ -26,6 +26,8 @@ const predict = async (sentences) => {
     tensors.push(tensor);
   }
 
+  if (!tensors.length) return [];
+
   const tensor = tf.concat(tensors);
 
   const resultTensors = classifierModel.predict(tensor);
